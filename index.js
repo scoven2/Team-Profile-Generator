@@ -6,6 +6,7 @@ const render = require("./lib/htmlGenerator")
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const { nextTick } = require("process");
 const DIST_DIR = path.resolve(__dirname, "dist");
 const distPath = path.join(DIST_DIR, "team.html");
 
@@ -88,3 +89,78 @@ const additionalEmployee = [{
     message: 'What type of team member would you like to add next? Select "Done" when you are finished to generate your team page.',
     choices: ['Engineer', 'Intern', 'Done']
 }]
+
+//start with manager 
+function init() {
+    managerPrompt();
+}
+
+//what type of employee to add
+function next() {
+    inquirer.prompt(additionalEmployee).then((response) => {
+        console.log(response);
+        switch (response.nextEmployee) {
+            case 'Engineer':
+                engineerPrompt();
+                break;
+            case 'Intern':
+                internPrompt();
+                break;
+            case 'Done':
+                console.log('Generating your team page.')
+                generateTeam();
+        }
+    })
+}
+
+//manager questions
+function managerPrompt() {
+    inquirer.prompt(managerQuestions).then((response) => {
+        let name = response.managerName;
+        let id = response.managerID;
+        let email = response.managerEmail;
+        let office = response.office;
+        const manager = new Manager(name, id, email, office);
+        teamArray.push(manager);
+        console.log(teamArray);
+        next();
+    })
+}
+
+//engineer questions
+function engineerPrompt() {
+    inquirer.prompt(engineerQuestions).then((response) => {
+        let name = response.engineerName;
+        let id = response.engineerID;
+        let email = response.engineerEmail;
+        let github = response.github;
+        const engineer = new Engineer(name, id, email, github);
+        teamArray.push(engineer);
+        console.log(teamArray);
+        next();
+    })
+}
+
+//intern questions
+function internPrompt() {
+    inquirer.prompt(internQuestions).then((response) => {
+        let name = response.internName;
+        let id = response.internID;
+        let email = response.internEmail;
+        let school = response.school;
+        const intern = new Intern(name, id, email, school);
+        teamArray.push(intern);
+        console.log(teamArray);
+        next();
+    })
+}
+
+function generateTeam() {
+    fs.writeFile(distPath, render(teamArray), function(err) {
+        if (err) {
+            return console.log(err)
+        }
+    })
+}
+
+init();
