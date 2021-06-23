@@ -1,5 +1,5 @@
 const Manager = require("../lib/manager");
-const Employee = require("../lib/employee");
+
 
 test("can set office number", () => {
     const testValue = 50;

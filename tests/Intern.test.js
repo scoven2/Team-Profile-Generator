@@ -1,4 +1,3 @@
-const { test, expect } = require("@jest/globals");
 const Intern = require("../lib/intern");
 
 test("can set school", () => {
@@ -15,6 +14,6 @@ test("getRole() returns Intern", () => {
 
 test("can get school", () => {
     const testValue = "UofM";
-    const e = new Engineer("Shia", 1, "test@email.com", testValue);
+    const e = new Intern("Shia", 1, "test@email.com", testValue);
     expect(e.getSchool()).toBe(testValue);
 });
