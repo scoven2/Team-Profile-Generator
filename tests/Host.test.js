@@ -11,9 +11,3 @@ test("Able to enter days host is unavailable to work using a constructor", () =>
     const e = new Host("Shia", 1, "test@test.com", testValue);
     expect(e.unavailable).toBe(testValue);
 });
-
-test("getPosition() returns \"Host\"", () => {
-    const testValue = "Host";
-    const e = new Host("Shia", 1, "test@test.com", "UofM");
-    expect(e.getPosition()).toBe(testValue);
-});
