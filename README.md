@@ -3,7 +3,7 @@
 ## Description
 An application that runs in node and asks the user a series of questions, then uses those answers and plugs them into an outline of an html file.
 
-[Link Video](https://drive.google.com/file/d/1sDgU1OYHv_gr5VwDUfkTgN5L0fhtMw8G/view)
+[Link Video](https://watch.screencastify.com/v/2TDXmcCyKZz4xQFWLhTr)
 
 
 ## Table of contents
