@@ -149,7 +149,7 @@ async function run() {
         `;
     console.log(html);
     const fs = require("fs");
-    fs.writeFile('newFile.html', html, function(err) {
+    fs.writeFile('teamProfile.html', html, function(err) {
         if (err) throw err;
         console.log('File created!');
     });
