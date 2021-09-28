@@ -1,160 +1,163 @@
 // Dependencies 
-const Employee = require("./lib/Employee");
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
-const inquirer = require("inquirer");
-const path = require("path");
+const Staff = require("./lib/Staff");
+const Supervisor = require("./lib/Supervisor");
+const Server = require("./lib/Server");
+const Host = require("./lib/Host");
 const fs = require("fs");
+
+const path = require("path");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const inquirer = require("inquirer");
+
 const render = require("./lib/htmlRenderer");
 
 
-//arrays or questions
+//arrays
 const teamArray = [];
 
 
-// Manager: 
-const managerQuestions = [{
+// Supervisor: 
+const supervisorQuestions = [{
         type: 'input',
-        name: 'managerName',
-        message: 'What is the name of the manager?'
+        name: 'supervisorName',
+        message: 'Enter supervisors name.'
     },
     {
         type: 'input',
-        name: 'managerID',
-        message: 'What is this managers ID number?'
+        name: 'supervisorID',
+        message: 'Enter supervisors ID.'
     },
     {
         type: 'input',
-        name: 'managerEmail',
-        message: 'What is this managers Email?'
+        name: 'supervisorPhone',
+        message: 'Enter supervisors Phone number.'
     },
     {
         type: 'input',
-        name: 'office',
-        message: 'What is this managers office number?'
+        name: 'experience',
+        message: 'Enter supervisors years experience.'
     },
 ]
 
-//Engineer: 
-const engineerQuestions = [{
+//Server: 
+const serverQuestions = [{
         type: 'input',
-        name: 'engiName',
-        message: 'What is the engineers name?'
+        name: 'serverName',
+        message: 'Enter the servers name.'
     },
     {
         type: 'input',
-        name: 'engiID',
-        message: 'What is the engineers ID number?'
+        name: 'serverID',
+        message: 'Enter the servers ID number.'
     },
     {
         type: 'input',
-        name: 'engiEmail',
-        message: 'What is the engineers email address?'
+        name: 'serverPhone',
+        message: 'Enter the servers phone number.'
     },
     {
         type: 'input',
-        name: 'github',
-        message: 'What is the engineers GitHub user name?'
+        name: 'discord',
+        message: 'Enter the servers Discord user name.'
     },
 ]
 
-//Intern:
-const internQuestions = [{
+//Host:
+const hostQuestions = [{
         type: 'input',
-        name: 'internName',
-        message: 'What is the interns name?'
+        name: 'hostName',
+        message: 'Enter the hosts name.'
     },
     {
         type: 'input',
-        name: 'internID',
-        message: 'What is the interns ID number?',
+        name: 'hostID',
+        message: 'Enter the hosts ID number.',
     },
     {
         type: 'input',
-        name: 'internEmail',
-        message: 'What is the interns email address?'
+        name: 'hostPhone',
+        message: 'Enter the hosts phone number.'
     },
     {
         type: 'input',
-        name: 'school',
-        message: 'What school does the intern attend?',
+        name: 'unavailable',
+        message: 'What days are the host unavailable to work.',
     },
 ]
 
-// add another employee
+// add another 
 
 const anotherOne = [{
     type: 'list',
-    name: 'nextEmployee',
-    message: 'What type of employee would you like to enter next? If you are done select "Done" to generate your teams page.',
-    choices: ['Engineer', 'Intern', 'Done']
+    name: 'nextStaff',
+    message: 'Enter the next type of staff you wish to add, or choose done to create your team page. ',
+    choices: ['Server', 'Host', 'Done']
 }]
 
 
 
-//starting function with manager 
+//starting function with supervisor 
 function init() {
-    managerPromt();
+    supervisorPromt();
 }
 
 
-// type of employee added
+// type of staff added
 function next() {
     inquirer.prompt(anotherOne).then((response) => {
         console.log(response);
-        switch (response.nextEmployee) {
-            case 'Engineer':
-                engineerPromt();
+        switch (response.nextStaff) {
+            case 'Server':
+                serverPromt();
                 break;
-            case 'Intern':
-                internPromt();
+            case 'Host':
+                hostPromt();
                 break;
             case 'Done':
-                console.log('Creating your team!')
+                console.log('Creating team!')
                 makeTeam();
         }
     })
 }
-//manager
-function managerPromt() {
-    inquirer.prompt(managerQuestions).then((response) => {
+//supervisor
+function supervisorPromt() {
+    inquirer.prompt(supervisorQuestions).then((response) => {
 
-        let name = response.managerName;
-        let id = response.managerID;
-        let email = response.managerEmail;
-        let office = response.office;
-        const manager = new Manager(name, id, email, office);
-        teamArray.push(manager);
+        let name = response.supervisorName;
+        let id = response.supervisorID;
+        let phone = response.supervisorPhone;
+        let experience = response.experience;
+        const supervisor = new Supervisor(name, id, phone, experience);
+        teamArray.push(supervisor);
         console.log(teamArray);
         next();
     })
 }
-//Engineer
-function engineerPromt() {
-    inquirer.prompt(engineerQuestions).then((response) => {
-        let name = response.engiName;
-        let id = response.engiID;
-        let email = response.engiEmail;
-        let github = response.github;
-        const engineer = new Engineer(name, id, email, github);
-        teamArray.push(engineer);
+//Server
+function serverPromt() {
+    inquirer.prompt(serverQuestions).then((response) => {
+        let name = response.serverName;
+        let id = response.serverID;
+        let phone = response.serverPhone;
+        let discord = response.discord;
+        const server = new Server(name, id, phone, discord);
+        teamArray.push(server);
         console.log(teamArray);
         next();
     })
 }
 
-//Function for Intern promts
-function internPromt() {
-    inquirer.prompt(internQuestions).then((response) => {
-        let name = response.internName;
-        let id = response.internID;
-        let email = response.internEmail;
-        let school = response.school;
-        const intern = new Intern(name, id, email, school);
-        teamArray.push(intern);
+//Function for Host promts
+function hostPromt() {
+    inquirer.prompt(hostQuestions).then((response) => {
+        let name = response.hostName;
+        let id = response.hostID;
+        let phone = response.hostPhone;
+        let unavailable = response.unavailable;
+        const host = new Host(name, id, phone, unavailable);
+        teamArray.push(host);
         console.log(teamArray);
         next();
     })
