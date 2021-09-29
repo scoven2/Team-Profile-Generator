@@ -1,3 +1,5 @@
+//entire project based on unit 10 activities 24, 25, 26, and 28
+
 const inquirer = require("inquirer");
 const Server = require("./Lib/Server");
 const Staff = require("./Lib/Staff");
